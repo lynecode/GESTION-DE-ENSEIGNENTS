@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des enseignants - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/enseignants.css">
+</head>
+<body>
+
+    <header class="header-modern">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-clock"></i>
+                <span>TimeEduc</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher un enseignant..." onkeyup="filterEnseignants()">
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">0</span>
+            </button>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?background=1a2a4a&color=f0c027&name=Admin" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Administrateur</span>
+                    <span class="user-role">Admin</span>
+                </div>
+                <button class="btn-logout" onclick="deconnexion()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar" id="navBar">
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <div class="nav-items">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="enseignants.html" class="nav-item active">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Enseignants</span>
+            </a>
+            <a href="matieres.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Matières</span>
+            </a>
+            <a href="stats.html" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistiques</span>
+            </a>
+            <a href="exports.html" class="nav-item">
+                <i class="fas fa-file-export"></i>
+                <span>Exports</span>
+            </a>
+            <a href="parametres.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Utilisateurs</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-chalkboard-teacher"></i> Gestion des enseignants</h1>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn-primary" onclick="openModal()">
+                    <i class="fas fa-plus"></i> Ajouter un enseignant
+                </button>
+                <button class="btn-primary" onclick="document.getElementById('fichierImport').click()"
+                    style="background:linear-gradient(135deg,#27ae60,#2ecc71);">
+                    <i class="fas fa-file-excel"></i> Importer Excel
+                </button>
+                <input type="file" id="fichierImport" accept=".xlsx,.xls" style="display:none;" onchange="importerExcel(event)">
+                <a href="#" onclick="telechargerModele()" class="btn-primary"
+                    style="background:linear-gradient(135deg,#f57c00,#ff9800);text-decoration:none;">
+                    <i class="fas fa-download"></i> Télécharger modèle
+                </a>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="enseignantsTable">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Grade</th>
+                        <th>Statut</th>
+                        <th>Département</th>
+                        <th>Taux horaire</th>
+                        <th>H. contractuelles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="enseignantsBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal Ajout / Modification -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-user-plus"></i> Ajouter un enseignant</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="enseignantForm" onsubmit="saveEnseignant(event)">
+                <input type="hidden" id="enseignantId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nom</label>
+                        <input type="text" id="nom" placeholder="Entrez le nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Prénom</label>
+                        <input type="text" id="prenom" placeholder="Entrez le prénom" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-graduation-cap"></i> Grade</label>
+                        <select id="grade" required>
+                            <option value="">Sélectionner</option>
+                            <option>Assistant</option>
+                            <option>Maître-Assistant</option>
+                            <option>Professeur</option>
+                            <option>Professeur HDR</option>
+                            <option>Autres</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-briefcase"></i> Statut</label>
+                        <select id="statut" required>
+                            <option value="">Sélectionner</option>
+                            <option>Permanent</option>
+                            <option>Vacataire</option>
+                            <option>Contractuel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> Département</label>
+                        <input type="text" id="departement" placeholder="Ex: Informatique" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-money-bill-wave"></i> Taux horaire (FCFA)</label>
+                        <input type="number" id="taux_horaire" placeholder="Ex: 4500" min="0" step="100" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Heures contractuelles</label>
+                        <input type="number" id="heures_contractuelles" placeholder="Ex: 120" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" placeholder="email@univ.fr" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Détails -->
+    <div id="detailsModal" class="modal hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2><i class="fas fa-user"></i> Détails de l'enseignant</h2>
+                <button class="modal-close" onclick="closeDetailsModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="detailsContent" class="details-content"></div>
+        </div>
+    </div>
+
+    <script src="../../js/enseignants.js"></script>
+</body>
+</html>

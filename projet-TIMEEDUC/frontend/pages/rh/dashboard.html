@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord RH - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/dashboard.css">
+</head>
+<body>
+
+    <header class="header-modern">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-clock"></i>
+                <span>TimeEduc</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">0</span>
+            </button>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?background=1a2a4a&color=f0c027&name=RH" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name" id="userName">RH</span>
+                    <span class="user-role">Ressources Humaines</span>
+                </div>
+                <button class="btn-logout" onclick="deconnexion()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar" id="navBar">
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <div class="nav-items">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="heures.html" class="nav-item">
+                <i class="fas fa-clock"></i>
+                <span>Saisie heures</span>
+            </a>
+            <a href="paiements.html" class="nav-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Paiements</span>
+            </a>
+            <a href="statistiques.html" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistiques</span>
+            </a>
+            <a href="exports.html" class="nav-item">
+                <i class="fas fa-file-export"></i>
+                <span>Exports</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon bg-blue">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statEnseignants">0</span>
+                    <span class="stat-label">Enseignants</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-green">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statHeures">0</span>
+                    <span class="stat-label">Heures effectuées</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-orange">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statDepassements">0</span>
+                    <span class="stat-label">Dépassements</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-red">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statMontant">0</span>
+                    <span class="stat-label">Montant total (FCFA)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="quick-actions-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bolt"></i> Actions rapides</h3>
+                </div>
+                <div class="card-body">
+                    <a href="heures.html" class="quick-action">
+                        <div class="action-icon"><i class="fas fa-calendar-plus"></i></div>
+                        <span>Saisir des heures</span>
+                    </a>
+                    <a href="paiements.html" class="quick-action">
+                        <div class="action-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <span>États de paiement</span>
+                    </a>
+                    <a href="statistiques.html" class="quick-action">
+                        <div class="action-icon"><i class="fas fa-chart-bar"></i></div>
+                        <span>Statistiques</span>
+                    </a>
+                    <a href="exports.html" class="quick-action">
+                        <div class="action-icon"><i class="fas fa-file-export"></i></div>
+                        <span>Exporter</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="history-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock"></i> Dernières heures saisies</h3>
+                    <a href="heures.html" class="btn-see-all">Voir tout</a>
+                </div>
+                <div class="card-body">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Enseignant</th>
+                                <th>Matière</th>
+                                <th>Type</th>
+                                <th>Durée</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dernieresHeures">
+                            <tr>
+                                <td colspan="4" class="empty-row">
+                                    <i class="fas fa-inbox"></i><br>Aucune heure récente
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../../js/tableau-de-bord-rh.js"></script>
+</body>
+</html>

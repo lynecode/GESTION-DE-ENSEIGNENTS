@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="frontend/styles/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <i class="fas fa-clock"></i>
+            <span>TimeEduc</span>
+        </div>
+        <h2>Bienvenue</h2>
+        <p class="sous-titre">Connectez-vous à votre espace</p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Adresse email" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="mot_de_passe" placeholder="Mot de passe" required />
+            </div>
+            <button type="submit">
+                <i class="fas fa-sign-in-alt"></i> Se connecter
+            </button>
+            <p id="erreur" class="erreur"></p>
+        </form>
+    </div>
+    <script src="frontend/js/login.js"></script>
+</body>
+</html>

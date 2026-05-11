@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/enseignants.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <header class="header-modern">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-clock"></i>
+                <span>TimeEduc</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">0</span>
+            </button>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?background=1a2a4a&color=f0c027&name=Admin" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Administrateur</span>
+                    <span class="user-role">Admin</span>
+                </div>
+                <button class="btn-logout" onclick="deconnexion()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar" id="navBar">
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <div class="nav-items">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="enseignants.html" class="nav-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Enseignants</span>
+            </a>
+            <a href="matieres.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Matières</span>
+            </a>
+            <a href="stats.html" class="nav-item active">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistiques</span>
+            </a>
+            <a href="exports.html" class="nav-item">
+                <i class="fas fa-file-export"></i>
+                <span>Exports</span>
+            </a>
+            <a href="parametres.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres</span>
+            </a>
+            <a href="utilisateurs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Utilisateurs</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-chart-bar"></i> Statistiques</h1>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+            <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#1a2a4a;margin-bottom:20px;">
+                    <i class="fas fa-chart-pie" style="color:#f0c027;"></i> Répartition par type d'heure
+                </h3>
+                <canvas id="graphiqueTypes"></canvas>
+            </div>
+            <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#1a2a4a;margin-bottom:20px;">
+                    <i class="fas fa-chart-bar" style="color:#f0c027;"></i> Heures par département
+                </h3>
+                <canvas id="graphiqueDepartements"></canvas>
+            </div>
+        </div>
+
+        <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+            <h3 style="color:#1a2a4a;margin-bottom:20px;">
+                <i class="fas fa-exclamation-triangle" style="color:#f0c027;"></i> Enseignants en dépassement
+            </h3>
+            <div class="table-container" style="box-shadow:none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Département</th>
+                            <th>H. contractuelles</th>
+                            <th>H. effectuées</th>
+                            <th>Dépassement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpsDepassements"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/stats-admin.js"></script>
+</body>
+</html>

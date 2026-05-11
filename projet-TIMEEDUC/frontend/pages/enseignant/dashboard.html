@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon espace - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/dashboard.css">
+</head>
+<body>
+
+    <header class="header-modern">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-clock"></i>
+                <span>TimeEduc</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">0</span>
+            </button>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?background=1a2a4a&color=f0c027&name=ENS" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Enseignant</span>
+                    <span class="user-role">Enseignant</span>
+                </div>
+                <button class="btn-logout" onclick="deconnexion()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar" id="navBar">
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <div class="nav-items">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Mon tableau de bord</span>
+            </a>
+            <a href="mes-heures.html" class="nav-item">
+                <i class="fas fa-clock"></i>
+                <span>Mes heures</span>
+            </a>
+            <a href="mon-recapitulatif.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>Mon récapitulatif</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+
+        <!-- Message de bienvenue -->
+        <div class="carte-bienvenue" id="carteBienvenue">
+            <div class="bienvenue-contenu">
+                <div class="bienvenue-icone">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="bienvenue-texte">
+                    <h2 id="messageBienvenue">Bienvenue !</h2>
+                    <p id="sousTitreBienvenue">Voici un aperçu de vos heures effectuées.</p>
+                </div>
+                <button onclick="document.getElementById('carteBienvenue').style.display='none'"
+                    style="background:none;border:none;cursor:pointer;color:white;font-size:1.2rem;margin-left:auto;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Cartes statistiques -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon bg-blue">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statTotalHeures">0</span>
+                    <span class="stat-label">Total heures effectuées</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-green">
+                    <i class="fas fa-chalkboard"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statHeuresCM">0</span>
+                    <span class="stat-label">Heures CM</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-orange">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statHeuresTD">0</span>
+                    <span class="stat-label">Heures TD</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-red">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value" id="statHeuresTP">0</span>
+                    <span class="stat-label">Heures TP</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grille dashboard -->
+        <div class="dashboard-grid">
+            <div class="history-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> Mes dernières heures</h3>
+                    <a href="mes-heures.html" class="btn-see-all">Voir tout</a>
+                </div>
+                <div class="card-body">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Matière</th>
+                                <th>Type</th>
+                                <th>Durée</th>
+                                <th>Salle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dernieresHeures">
+                            <tr>
+                                <td colspan="5" class="empty-row">
+                                    <i class="fas fa-inbox"></i><br>Aucune heure récente
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="quick-actions-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-info-circle"></i> Mon profil</h3>
+                </div>
+                <div class="card-body" id="monProfil">
+                    <div style="text-align:center;color:#888;padding:20px;">
+                        <i class="fas fa-spinner fa-spin"></i> Chargement...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../../js/tableau-de-bord-enseignant.js"></script>
+</body>
+</html>

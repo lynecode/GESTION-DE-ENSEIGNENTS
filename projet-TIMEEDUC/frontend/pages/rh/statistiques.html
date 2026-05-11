@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques - TimeEduc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../styles/enseignants.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <header class="header-modern">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-clock"></i>
+                <span>TimeEduc</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">0</span>
+            </button>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?background=1a2a4a&color=f0c027&name=RH" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name" id="userName">RH</span>
+                    <span class="user-role">Ressources Humaines</span>
+                </div>
+                <button class="btn-logout" onclick="deconnexion()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar" id="navBar">
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <div class="nav-items">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="heures.html" class="nav-item">
+                <i class="fas fa-clock"></i>
+                <span>Saisie heures</span>
+            </a>
+            <a href="paiements.html" class="nav-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Paiements</span>
+            </a>
+            <a href="statistiques.html" class="nav-item active">
+                <i class="fas fa-chart-bar"></i>
+                <span>Statistiques</span>
+            </a>
+            <a href="exports.html" class="nav-item">
+                <i class="fas fa-file-export"></i>
+                <span>Exports</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><i class="fas fa-chart-bar"></i> Statistiques</h1>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+            <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#1a2a4a;margin-bottom:20px;">
+                    <i class="fas fa-chart-pie" style="color:#f0c027;"></i> Répartition par type d'heure
+                </h3>
+                <canvas id="graphiqueTypes"></canvas>
+            </div>
+
+            <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#1a2a4a;margin-bottom:20px;">
+                    <i class="fas fa-chart-bar" style="color:#f0c027;"></i> Heures par département
+                </h3>
+                <canvas id="graphiqueDepartements"></canvas>
+            </div>
+        </div>
+
+        <!-- Suivi des dépassements -->
+        <div style="background:white;border-radius:15px;padding:25px;box-shadow:0 2px 15px rgba(0,0,0,0.05);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h3 style="color:#1a2a4a;">
+                    <i class="fas fa-exclamation-triangle" style="color:#f0c027;"></i> Suivi des heures enseignants
+                </h3>
+                <button id="btnImprimer" class="btn-primary" style="font-size:0.85rem;padding:8px 16px;">
+                    <i class="fas fa-print"></i> Imprimer
+                </button>      
+            </div>
+            <div class="table-container" style="box-shadow:none;">
+                <table id="tableDepassements">
+                    <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Département</th>
+                            <th>H. contractuelles</th>
+                            <th>H. effectuées</th>
+                            <th>Dépassement</th>
+                            <th>Progression</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpsDepassements"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../../js/statistiques-rh.js"></script>
+</body>
+</html>
